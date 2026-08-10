@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.frontend
+    container_name: zangoh-supervisor-frontend
+    volumes:
+      - ./frontend-starter:/app
+      - /app/node_modules
+    working_dir: /app
+    command: sh -c "npm install && npm start"
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:8080
+      - REACT_APP_WS_URL=ws://localhost:8080
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.backend
+    container_name: zangoh-supervisor-backend
+    volumes:
+      - ./backend-starter:/app
+      - /app/node_modules
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./backend-starter/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
