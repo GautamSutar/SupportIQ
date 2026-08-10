@@ -1,0 +1,7 @@
+# Non-project clutter at the repo root (zip-extraction artifacts, local tool config,
+# and source assets already copied into test-agent/frontend-starter/public/assets/)
+__MACOSX/
+.claude/
+.DS_Store
+
+# test-agent/ has its own .gitignore for node_modules, .env, etc.
